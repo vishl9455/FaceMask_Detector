@@ -85,7 +85,7 @@ The model is trained using:
 
 ## Results
 
-The model achieved approximately **93% validation accuracy** on the validation/test split.
+The model achieved approximately **95% validation accuracy** on the validation/test split.
 
 > Validation accuracy represents performance on the held-out dataset and does not necessarily represent real-world webcam accuracy.
 
