@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FaceGuard AI | Face Mask Detection</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 10% 20%,
+                    rgba(99, 102, 241, 0.18),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 80%,
+                    rgba(14, 165, 233, 0.15),
+                    transparent 30%
+                ),
+                #070b16;
+
+            color: #f8fafc;
+
+            padding: 30px 20px;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .header {
+            max-width: 1100px;
+            margin: auto;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 10px 0 35px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #06b6d4
+                );
+
+            font-size: 23px;
+
+            box-shadow:
+                0 8px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .logo-text h2 {
+            font-size: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-text p {
+            color: #94a3b8;
+            font-size: 12px;
+            margin-top: 2px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 8px 13px;
+
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            border-radius: 30px;
+
+            background: rgba(15, 23, 42, 0.6);
+
+            color: #cbd5e1;
+            font-size: 13px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+
+            background: #22c55e;
+
+            border-radius: 50%;
+
+            box-shadow:
+                0 0 10px #22c55e;
+        }
+
+
+        /* ================= HERO ================= */
+
+        .hero {
+            max-width: 1100px;
+            margin: auto;
+
+            text-align: center;
+
+            padding: 30px 20px 45px;
+        }
+
+        .badge {
+            display: inline-block;
+
+            padding: 7px 14px;
+
+            border-radius: 30px;
+
+            background: rgba(99, 102, 241, 0.1);
+
+            border: 1px solid rgba(99, 102, 241, 0.25);
+
+            color: #a5b4fc;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 6vw, 64px);
+
+            line-height: 1.05;
+
+            letter-spacing: -2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #a5b4fc,
+                    #67e8f9
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            margin-bottom: 18px;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: auto;
+
+            color: #94a3b8;
+
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+
+        /* ================= MAIN CARD ================= */
+
+        .main-card {
+            max-width: 900px;
+
+            margin: auto;
+
+            padding: 28px;
+
+            border-radius: 24px;
+
+            background:
+                rgba(15, 23, 42, 0.72);
+
+            border:
+                1px solid rgba(148, 163, 184, 0.14);
+
+            backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.35);
+        }
+
+
+        /* ================= UPLOAD ================= */
+
+        .upload-area {
+
+            min-height: 280px;
+
+            border: 2px dashed rgba(148, 163, 184, 0.25);
+
+            border-radius: 18px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            flex-direction: column;
+
+            padding: 25px;
+
+            transition: 0.25s;
+
+            cursor: pointer;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .upload-area:hover {
+
+            border-color: #6366f1;
+
+            background:
+                rgba(99, 102, 241, 0.05);
+        }
+
+        .upload-icon {
+
+            width: 70px;
+            height: 70px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 20px;
+
+            background:
+                rgba(99, 102, 241, 0.12);
+
+            color: #a5b4fc;
+
+            font-size: 32px;
+
+            margin-bottom: 18px;
+        }
+
+        .upload-area h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .upload-area p {
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            margin-bottom: 18px;
+        }
+
+        #imageInput {
+            display: none;
+        }
+
+        .choose-btn {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #4f46e5
+                );
+
+            color: white;
+
+            border: none;
+
+            padding: 12px 22px;
+
+            border-radius: 10px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .choose-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+
+        /* ================= PREVIEW ================= */
+
+        .preview-container {
+
+            display: none;
+
+            margin-top: 22px;
+
+            text-align: center;
+        }
+
+        #preview {
+
+            max-width: 100%;
+
+            max-height: 450px;
+
+            border-radius: 16px;
+
+            object-fit: contain;
+
+            border:
+                1px solid rgba(148, 163, 184, 0.15);
+
+            box-shadow:
+                0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+
+
+        /* ================= BUTTON ================= */
+
+        .detect-btn {
+
+            width: 100%;
+
+            margin-top: 22px;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #06b6d4,
+                    #6366f1
+                );
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+            box-shadow:
+                0 10px 30px rgba(6, 182, 212, 0.15);
+        }
+
+        .detect-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 15px 35px rgba(99, 102, 241, 0.25);
+        }
+
+        .detect-btn:disabled {
+
+            opacity: 0.5;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+
+        /* ================= LOADING ================= */
+
+        .loader {
+
+            display: none;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+            color: #94a3b8;
+
+            font-size: 14px;
+        }
+
+        .spinner {
+
+            width: 20px;
+            height: 20px;
+
+            border: 3px solid rgba(148, 163, 184, 0.2);
+
+            border-top-color: #6366f1;
+
+            border-radius: 50%;
+
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        /* ================= RESULT ================= */
+
+        #result {
+
+            margin-top: 25px;
+        }
+
+        .result-card {
+
+            padding: 22px;
+
+            border-radius: 16px;
+
+            background:
+                rgba(2, 6, 23, 0.55);
+
+            border:
+                1px solid rgba(148, 163, 184, 0.12);
+
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-title {
+
+            font-size: 13px;
+
+            color: #64748b;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 10px;
+        }
+
+        .prediction {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(15, 23, 42, 0.8);
+
+            margin-top: 10px;
+        }
+
+        .prediction-label {
+
+            font-size: 20px;
+
+            font-weight: 700;
+        }
+
+        .prediction-confidence {
+
+            color: #94a3b8;
+
+            font-size: 13px;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+
+            max-width: 900px;
+
+            margin: 35px auto 0;
+
+            text-align: center;
+
+            color: #475569;
+
+            font-size: 12px;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .header {
+                padding-bottom: 20px;
+            }
+
+            .status {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 20px;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .main-card {
+                padding: 16px;
+            }
+
+            .upload-area {
+                min-height: 240px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🛡️
+            </div>
+
+            <div class="logo-text">
+
+                <h2>FaceGuard AI</h2>
+
+                <p>Intelligent Face Mask Detection</p>
+
+            </div>
+
+        </div>
+
+
+        <div class="status">
+
+            <span class="status-dot"></span>
+
+            AI System Online
+
+        </div>
+
+    </header>
+
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <span class="badge">
+            ⚡ AI-Powered Computer Vision
+        </span>
+
+        <h1>
+            Face Mask<br>
+            Detection
+        </h1>
+
+        <p>
+            Upload an image and let our computer vision system
+            detect faces and determine whether a mask is being worn.
+        </p>
+
+    </section>
+
+
+
+    <!-- MAIN -->
+
+    <main class="main-card">
+
+
+        <!-- UPLOAD -->
+
+        <div
+            class="upload-area"
+            id="uploadArea"
+            onclick="imageInput.click()"
+        >
+
+            <div class="upload-icon">
+                ↑
+            </div>
+
+            <h3>
+                Upload an image
+            </h3>
+
+            <p>
+                JPG, JPEG, PNG or WEBP
+            </p>
+
+            <button
+                class="choose-btn"
+                type="button"
+                onclick="event.stopPropagation(); imageInput.click()"
+            >
+                Choose Image
+            </button>
+
+            <input
+                type="file"
+                id="imageInput"
+                accept="image/*"
+            >
+
+        </div>
+
+
+
+        <!-- PREVIEW -->
+
+        <div
+            class="preview-container"
+            id="previewContainer"
+        >
+
+            <img
+                id="preview"
+                alt="Selected image"
+            >
+
+        </div>
+
+
+
+        <!-- DETECT BUTTON -->
+
+        <button
+            class="detect-btn"
+            id="detectButton"
+            onclick="predict()"
+            disabled
+        >
+
+            🔍 Detect Mask
+
+        </button>
+
+
+
+        <!-- LOADING -->
+
+        <div
+            class="loader"
+            id="loader"
+        >
+
+            <div class="spinner"></div>
+
+            <span>
+                Analyzing image with AI...
+            </span>
+
+        </div>
+
+
+
+        <!-- RESULT -->
+
+        <div id="result"></div>
+
+
+    </main>
+
+
+
+    <footer>
+
+        FaceGuard AI • YOLO Face Detection + Keras Classification
+
+    </footer>
+
+
+
+    <script>
+
+
+        const imageInput =
+            document.getElementById("imageInput");
+
+        const preview =
+            document.getElementById("preview");
+
+        const previewContainer =
+            document.getElementById("previewContainer");
+
+        const detectButton =
+            document.getElementById("detectButton");
+
+        const result =
+            document.getElementById("result");
+
+        const loader =
+            document.getElementById("loader");
+
+        const uploadArea =
+            document.getElementById("uploadArea");
+
+
+
+        /* =========================
+           IMAGE SELECTION
+        ========================= */
+
+        imageInput.addEventListener(
+            "change",
+            function () {
+
+                const file =
+                    imageInput.files[0];
+
+                if (!file) {
+                    return;
+                }
+
+
+                preview.src =
+                    URL.createObjectURL(file);
+
+                previewContainer.style.display =
+                    "block";
+
+                detectButton.disabled =
+                    false;
+
+                result.innerHTML =
+                    "";
+
+            }
+        );
+
+
+
+        /* =========================
+           DRAG & DROP
+        ========================= */
+
+        uploadArea.addEventListener(
+            "dragover",
+            function (event) {
+
+                event.preventDefault();
+
+                uploadArea.style.borderColor =
+                    "#6366f1";
+
+            }
+        );
+
+
+        uploadArea.addEventListener(
+            "dragleave",
+            function () {
+
+                uploadArea.style.borderColor =
+                    "rgba(148, 163, 184, 0.25)";
+
+            }
+        );
+
+
+        uploadArea.addEventListener(
+            "drop",
+            function (event) {
+
+                event.preventDefault();
+
+                const files =
+                    event.dataTransfer.files;
+
+                if (
+                    files.length > 0 &&
+                    files[0].type.startsWith("image/")
+                ) {
+
+                    imageInput.files =
+                        files;
+
+                    imageInput.dispatchEvent(
+                        new Event("change")
+                    );
+
+                }
+
+            }
+        );
+
+
+
+        /* =========================
+           PREDICTION
+        ========================= */
+
+        async function predict() {
+
+            const file =
+                imageInput.files[0];
+
+
+            if (!file) {
+
+                result.innerHTML = `
+                    <div class="result-card">
+                        Please select an image first.
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            detectButton.disabled =
+                true;
+
+            loader.style.display =
+                "flex";
+
+            result.innerHTML =
+                "";
+
+
+
+            const formData =
+                new FormData();
+
+            formData.append(
+                "file",
+                file
+            );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/predict",
+                        {
+                            method: "POST",
+                            body: formData
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (data.error) {
+
+                    result.innerHTML = `
+                        <div class="result-card">
+                            <div class="result-title">
+                                Error
+                            </div>
+
+                            <div class="prediction">
+                                ${data.error}
+                            </div>
+                        </div>
+                    `;
+
+                    return;
+
+                }
+
+
+
+                if (
+                    !data.predictions ||
+                    data.predictions.length === 0
+                ) {
+
+                    result.innerHTML = `
+                        <div class="result-card">
+
+                            <div class="result-title">
+                                Detection Result
+                            </div>
+
+                            <div class="prediction">
+
+                                <span>
+                                    No face detected
+                                </span>
+
+                            </div>
+
+                        </div>
+                    `;
+
+                    return;
+
+                }
+
+
+
+                let output = `
+
+                    <div class="result-card">
+
+                        <div class="result-title">
+                            Detection Result
+                        </div>
+
+                `;
+
+
+
+                data.predictions.forEach(
+                    (prediction, index) => {
+
+                        const confidence =
+                            (
+                                prediction.confidence * 100
+                            ).toFixed(2);
+
+
+                        output += `
+
+                            <div class="prediction">
+
+                                <div>
+
+                                    <div class="prediction-label">
+
+                                        ${prediction.label}
+
+                                    </div>
+
+                                    <div class="prediction-confidence">
+
+                                        Face ${index + 1}
+
+                                    </div>
+
+                                </div>
+
+
+                                <div>
+
+                                    <div class="prediction-confidence">
+
+                                        Confidence
+
+                                    </div>
+
+                                    <div
+                                        class="prediction-label"
+                                    >
+
+                                        ${confidence}%
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    }
+                );
+
+
+
+                output += `
+                    </div>
+                `;
+
+
+                result.innerHTML =
+                    output;
+
+
+            }
+
+            catch (error) {
+
+                console.error(error);
+
+
+                result.innerHTML = `
+
+                    <div class="result-card">
+
+                        <div class="result-title">
+                            Connection Error
+                        </div>
+
+                        <div class="prediction">
+
+                            Unable to connect to
+                            the prediction server.
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+
+            finally {
+
+                loader.style.display =
+                    "none";
+
+                detectButton.disabled =
+                    false;
+
+            }
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
