@@ -1,0 +1,10 @@
+.venv
+data
+.git
+.github
+__pycache__
+*.pyc
+*.ipynb
+README.md
+webcam.py
+model.keras
